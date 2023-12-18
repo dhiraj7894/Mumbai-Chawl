@@ -16,6 +16,9 @@ namespace MumbaiChawls
 
         public const string FALLING = "Falling Idle";
         public const string LAND = "Falling to land";
+
+        public const string TAKEDAMAGE = "TakeDamage";
+        public const string DYING = "Dying";
         public AnimHash()
         {
             Animator.StringToHash(LOCOMOTION);
@@ -26,6 +29,8 @@ namespace MumbaiChawls
             Animator.StringToHash(BACKSTAB);
             Animator.StringToHash(FALLING);
             Animator.StringToHash(LAND);
+            Animator.StringToHash(TAKEDAMAGE);
+            Animator.StringToHash(DYING);
         }
     }
 }

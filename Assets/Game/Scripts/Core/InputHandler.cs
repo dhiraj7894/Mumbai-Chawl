@@ -1,3 +1,4 @@
+using MumbaiChawls.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -16,6 +17,8 @@ namespace MumbaiChawls
         public float mouseY;
 
         public bool b_Input;
+        public bool rb_Input;
+        public bool rt_Input;
         
         public bool rollFlag;
         public bool sprintFlag;
@@ -28,6 +31,14 @@ namespace MumbaiChawls
         Vector2 movementInput;
 
         PlayerInputs inputActions;
+        PlayerAttacker attacker;
+        PlayerInventory inventory;
+
+        private void Start()
+        {
+            attacker = GetComponent<PlayerAttacker>();
+            inventory = GetComponent<PlayerInventory>();
+        }
 
         private void OnEnable ()
         {
@@ -49,6 +60,7 @@ namespace MumbaiChawls
         {
             Move(delta);
             HandleRollingInput(delta);
+            HandleAttackInput(delta);
         }
 
         public void HandleRollingInput(float delta)
@@ -79,6 +91,20 @@ namespace MumbaiChawls
 
             mouseX = cameraInput.x; 
             mouseY = cameraInput.y;
+        }
+
+        private void HandleAttackInput(float delta)
+        {
+            inputActions.PlayerAction.RB.performed += i => rb_Input = true;
+            inputActions.PlayerAction.RT.performed += i => rt_Input = true;
+
+            if (rb_Input)
+            {
+                attacker.HandleLightAttack(inventory.rightCombatItem);
+            }else if (rt_Input)
+            {
+                attacker.HandleHeavyAttack(inventory.rightCombatItem);
+            }
         }
     }
 }

@@ -18,7 +18,8 @@ namespace MumbaiChawls.Player
 
         [Header("Movement Stats")]
         [SerializeField] float movementSpeed = 5;
-        [SerializeField] float sprintSpeed = 5;
+        [SerializeField] float sprintSpeed = 8;
+        [SerializeField] float walkSpeed = 5;
         [SerializeField] float rotationSpeed = 15;
         [SerializeField] float fallingSpeed = 15;
 
@@ -81,7 +82,8 @@ namespace MumbaiChawls.Player
             moveDirection.y = 0;
             moveDirection.Normalize();
             float speed = movementSpeed;
-            if (inputHandler.sprintFlag)
+
+            if (inputHandler.moveAmount > 0.5f && inputHandler.sprintFlag)
             {
                 speed = sprintSpeed;
                 playerManager.isSprinting = true;
@@ -89,7 +91,17 @@ namespace MumbaiChawls.Player
             }
             else
             {
-                moveDirection *= speed;
+                if(inputHandler.moveAmount < 0.5f)
+                {
+                    moveDirection *= walkSpeed;
+                    playerManager.isSprinting = false;
+                }
+                else
+                {
+                    moveDirection *= speed;
+                    playerManager.isSprinting = false;
+                }
+                
             }
 
             Vector3 projectVelocity = Vector3.ProjectOnPlane(moveDirection, normalVector);            

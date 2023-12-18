@@ -149,6 +149,24 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""SlowTap"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RB"",
+                    ""type"": ""Button"",
+                    ""id"": ""8a2194f0-5041-41e7-9f28-7b1e2a026ea0"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""RT"",
+                    ""type"": ""Button"",
+                    ""id"": ""8ee443b2-db29-4e91-a2f6-521bd870fc55"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -160,6 +178,28 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Roll"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""778d7e9e-708d-4cb9-a9c6-8aeef4edcd7d"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d5bbe969-2f27-4045-b166-bddd6449aa42"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RT"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -181,6 +221,8 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         // Player Action
         m_PlayerAction = asset.FindActionMap("Player Action", throwIfNotFound: true);
         m_PlayerAction_Roll = m_PlayerAction.FindAction("Roll", throwIfNotFound: true);
+        m_PlayerAction_RB = m_PlayerAction.FindAction("RB", throwIfNotFound: true);
+        m_PlayerAction_RT = m_PlayerAction.FindAction("RT", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -297,11 +339,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_PlayerAction;
     private List<IPlayerActionActions> m_PlayerActionActionsCallbackInterfaces = new List<IPlayerActionActions>();
     private readonly InputAction m_PlayerAction_Roll;
+    private readonly InputAction m_PlayerAction_RB;
+    private readonly InputAction m_PlayerAction_RT;
     public struct PlayerActionActions
     {
         private @PlayerInputs m_Wrapper;
         public PlayerActionActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
         public InputAction @Roll => m_Wrapper.m_PlayerAction_Roll;
+        public InputAction @RB => m_Wrapper.m_PlayerAction_RB;
+        public InputAction @RT => m_Wrapper.m_PlayerAction_RT;
         public InputActionMap Get() { return m_Wrapper.m_PlayerAction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -314,6 +360,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Roll.started += instance.OnRoll;
             @Roll.performed += instance.OnRoll;
             @Roll.canceled += instance.OnRoll;
+            @RB.started += instance.OnRB;
+            @RB.performed += instance.OnRB;
+            @RB.canceled += instance.OnRB;
+            @RT.started += instance.OnRT;
+            @RT.performed += instance.OnRT;
+            @RT.canceled += instance.OnRT;
         }
 
         private void UnregisterCallbacks(IPlayerActionActions instance)
@@ -321,6 +373,12 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @Roll.started -= instance.OnRoll;
             @Roll.performed -= instance.OnRoll;
             @Roll.canceled -= instance.OnRoll;
+            @RB.started -= instance.OnRB;
+            @RB.performed -= instance.OnRB;
+            @RB.canceled -= instance.OnRB;
+            @RT.started -= instance.OnRT;
+            @RT.performed -= instance.OnRT;
+            @RT.canceled -= instance.OnRT;
         }
 
         public void RemoveCallbacks(IPlayerActionActions instance)
@@ -355,5 +413,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     public interface IPlayerActionActions
     {
         void OnRoll(InputAction.CallbackContext context);
+        void OnRB(InputAction.CallbackContext context);
+        void OnRT(InputAction.CallbackContext context);
     }
 }
