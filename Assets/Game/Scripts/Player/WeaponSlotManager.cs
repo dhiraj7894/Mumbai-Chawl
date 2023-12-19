@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using MumbaiChawls.Control;
+using UnityEngine.Experimental.GlobalIllumination;
+using UnityEngine.Rendering;
 
 namespace MumbaiChawls.Player
 {
@@ -9,6 +11,9 @@ namespace MumbaiChawls.Player
     {
         WeaponHolderSlot leftHandSlot;
         WeaponHolderSlot rightHandSlot;
+
+        DamageCollider leftHandDamageCollider;
+        DamageCollider rightHandDamageCollider;
 
         private void Awake()
         {
@@ -32,11 +37,44 @@ namespace MumbaiChawls.Player
             if (isLeft)
             {
                 leftHandSlot.LoadWeaponModel(combatItem);
-            }else if (!isLeft)
+                LoadLeftWeaponDamageCollider();
+            }
+            else if (!isLeft)
             {
                 rightHandSlot.LoadWeaponModel(combatItem);
+                LoadRightWeaponDamageCollider();
             }
         }
+
+        #region Handle Weapon's Damage Collider
+        private void LoadLeftWeaponDamageCollider()
+        {
+            leftHandDamageCollider = leftHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
+        }
+        private void LoadRightWeaponDamageCollider()
+        {
+            rightHandDamageCollider = rightHandSlot.currentWeaponModel.GetComponentInChildren<DamageCollider>();
+        }
+
+        public void OpenLeftHandDamageCollider()
+        {
+            leftHandDamageCollider.EnableDamageCollider();
+        }
+        public void CloseLeftHandDamageCollider()
+        {
+            leftHandDamageCollider.DisbaleDamageCollider();
+        }
+       
+        public void OpenRightHandDamageCollider()
+        {
+            rightHandDamageCollider.EnableDamageCollider();
+        }
+        public void CloseRightHandDamageCollider()
+        {
+            rightHandDamageCollider.DisbaleDamageCollider();
+        }
+        #endregion
+
 
     }
 }

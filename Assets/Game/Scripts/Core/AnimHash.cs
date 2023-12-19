@@ -8,6 +8,7 @@ namespace MumbaiChawls
         public const string VERTICAL = "vertical";
 
         public const string LOCOMOTION = "Locomotion";
+        public const string EMPTY = "Empty";
 
         public const string INTERACTING = "isInteracting";
 
@@ -19,6 +20,8 @@ namespace MumbaiChawls
 
         public const string TAKEDAMAGE = "TakeDamage";
         public const string DYING = "Dying";
+
+        public const string CANDOCOMBO = "canDoCombo";
         public AnimHash()
         {
             Animator.StringToHash(LOCOMOTION);
@@ -31,6 +34,8 @@ namespace MumbaiChawls
             Animator.StringToHash(LAND);
             Animator.StringToHash(TAKEDAMAGE);
             Animator.StringToHash(DYING);
+            Animator.StringToHash(EMPTY);
+            Animator.StringToHash(CANDOCOMBO);
         }
     }
 }

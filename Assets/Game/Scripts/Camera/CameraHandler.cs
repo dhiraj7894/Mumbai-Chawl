@@ -30,12 +30,13 @@ namespace MumbaiChawls
         public float cameraCollisionOffset = 0.2f;
         public float minimumCollisionOffset = 0.2f;
 
-
+        [System.Obsolete]
         private void Awake()
         {
             myTransform = transform;
             defaultPosition = cameraTransform.localPosition.z;
             ignoreLayer = ~(1 << 8 | 1 << 9 | 1 << 10);
+            targetTransform = FindObjectOfType<PlayerManager>().transform;  
         }
 
         public void followTarget(float delta)
