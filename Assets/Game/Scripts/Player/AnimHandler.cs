@@ -96,6 +96,14 @@ namespace MumbaiChawls.Player
         {
             canRotate = false;
         }
+        public void EnableCombo()
+        {
+            anim.SetBool(AnimHash.CANDOCOMBO, true);
+        }
+        public void DisableCombo()
+        {
+            anim.SetBool(AnimHash.CANDOCOMBO, false);
+        }
 
         private void OnAnimatorMove()
         {

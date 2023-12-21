@@ -19,9 +19,13 @@ namespace MumbaiChawls
         public bool b_Input;
         public bool rb_Input;
         public bool rt_Input;
+        public bool lockOnInput;
         
         public bool rollFlag;
         public bool sprintFlag;
+        public bool comboFlag;
+        public bool lockOnFlag;
+
 
         
 
@@ -33,11 +37,14 @@ namespace MumbaiChawls
         PlayerInputs inputActions;
         PlayerAttacker attacker;
         PlayerInventory inventory;
-
+        PlayerManager playerManager;
+        CameraHandler cameraHandler;
         private void Start()
         {
             attacker = GetComponent<PlayerAttacker>();
             inventory = GetComponent<PlayerInventory>();
+            playerManager = GetComponent<PlayerManager>();
+            cameraHandler = CameraHandler.Instance;
         }
 
         private void OnEnable ()
@@ -47,6 +54,8 @@ namespace MumbaiChawls
                 inputActions = new PlayerInputs();
                 inputActions.Player.move.performed += inputActions => movementInput = inputActions.ReadValue<Vector2>();
                 inputActions.Player.cam.performed += camActions => cameraInput = camActions.ReadValue<Vector2>();
+
+                inputActions.PlayerAction.LockOn.performed += i => lockOnInput = true;
             }
             inputActions.Enable();
         }
@@ -61,6 +70,7 @@ namespace MumbaiChawls
             Move(delta);
             HandleRollingInput(delta);
             HandleAttackInput(delta);
+            HandleLockOnInput();
         }
 
         public void HandleRollingInput(float delta)
@@ -100,11 +110,49 @@ namespace MumbaiChawls
 
             if (rb_Input)
             {
-                attacker.HandleLightAttack(inventory.rightCombatItem);
+                if (playerManager.canDoCombo)
+                {
+                    if (comboFlag) return;
+                    comboFlag = true;
+                    attacker.HandleWeaponCombo(inventory.rightCombatItem);
+                    comboFlag = false;
+                }
+                else
+                {
+                    if (playerManager.isInteracting)
+                        return;
+
+                    if (playerManager.canDoCombo)
+                        return;
+                    attacker.HandleLightAttack(inventory.rightCombatItem);
+                }
+                
             }else if (rt_Input)
             {
                 attacker.HandleHeavyAttack(inventory.rightCombatItem);
             }
+        }
+
+        private void HandleLockOnInput()
+        {
+            if(lockOnInput && !lockOnFlag)
+            {
+                cameraHandler.ClearLockOnTargets();
+                lockOnInput = false;               
+                cameraHandler.HandleLockOn();
+                if(cameraHandler.nearestLockOnTarget != null)
+                {
+                    cameraHandler.currentLockOnTarget = cameraHandler.nearestLockOnTarget;
+                    lockOnFlag = true;
+                }
+
+            }
+            else if (lockOnInput && lockOnFlag)
+            {
+                lockOnFlag = false;
+                lockOnInput = false;   
+                cameraHandler.ClearLockOnTargets();
+            }            
         }
     }
 }

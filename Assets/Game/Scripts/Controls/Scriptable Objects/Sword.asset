@@ -17,4 +17,5 @@ MonoBehaviour:
   prefab: {fileID: 2451481342896509280, guid: b04dcf2f75af28b4eacc2f3c1a719f8c, type: 3}
   isUnarmed: 0
   Lead_Jab_01: Lead Jab_01
+  Lead_Jab_02: Lead Jab_02
   Hook_01: Hook_01

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace MumbaiChawls.Player.Stats
+namespace MumbaiChawls.Enemy.Stats
 {
 
     public class EnemyStats : MonoBehaviour

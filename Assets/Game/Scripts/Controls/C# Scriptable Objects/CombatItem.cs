@@ -12,6 +12,7 @@ namespace MumbaiChawls.Control
         [Header("Animations Name")]
 
         public string Lead_Jab_01;
+        public string Lead_Jab_02;
         public string Hook_01;
     }
 }

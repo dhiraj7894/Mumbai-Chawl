@@ -1,3 +1,4 @@
+using MumbaiChawls.core;
 using MumbaiChawls.Player;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using UnityEngine.InputSystem;
 
 namespace MumbaiChawls
 {
-    public class PlayerManager : MonoBehaviour
+    public class PlayerManager : CharacterManager
     {
         InputHandler inputHandler;
         PlayerLoco playerLoco;
@@ -21,6 +22,7 @@ namespace MumbaiChawls
         public bool isSprinting;
         public bool isInAir;
         public bool isGrounded;
+        public bool canDoCombo;
 
 
         private void Awake()
@@ -50,6 +52,7 @@ namespace MumbaiChawls
             float delta = Time.deltaTime; 
 
             isInteracting = anim.GetBool(AnimHash.INTERACTING);
+            canDoCombo = anim.GetBool(AnimHash.CANDOCOMBO);
             
             inputHandler.TickInput(delta);            
             playerLoco.HandleMovement(delta);
