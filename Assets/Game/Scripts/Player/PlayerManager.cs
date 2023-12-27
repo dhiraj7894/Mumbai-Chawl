@@ -1,4 +1,4 @@
-using MumbaiChawls.core;
+using MumbaiChawls.Core;
 using MumbaiChawls.Player;
 using System.Collections;
 using System.Collections.Generic;
@@ -55,7 +55,7 @@ namespace MumbaiChawls
             canDoCombo = anim.GetBool(AnimHash.CANDOCOMBO);
             
             inputHandler.TickInput(delta);            
-            playerLoco.HandleMovement(delta);
+            playerLoco.HandleMovementInput(delta);
             playerLoco.HandleRollingAndSprinting(delta);
             playerLoco.HandleFalling(delta, playerLoco.moveDirection);
 

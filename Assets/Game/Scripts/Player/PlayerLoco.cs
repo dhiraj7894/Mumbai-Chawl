@@ -8,8 +8,9 @@ namespace MumbaiChawls.Player
     {
         InputHandler inputHandler;        
         Transform cameraTransform;
-        AnimHandler animHandler;
+        PlayerAnimHandler animHandler;
         PlayerManager playerManager;
+        CameraHandler cameraHandler;
         public Vector3 moveDirection;
 
         [HideInInspector]public Transform myTransform;
@@ -35,9 +36,10 @@ namespace MumbaiChawls.Player
         private void Start()
         {
             inputHandler = GetComponent<InputHandler>();
-            animHandler = GetComponent<AnimHandler>();
+            animHandler = GetComponent<PlayerAnimHandler>();
             rigidbody = GetComponent<Rigidbody>();
             playerManager = GetComponent<PlayerManager>();
+            cameraHandler = CameraHandler.Instance;
             animHandler.Initialize();
             cameraTransform = Camera.main.transform;
             myTransform = transform;
@@ -50,26 +52,59 @@ namespace MumbaiChawls.Player
         Vector3 normalVector;
         Vector3 targetPosition;
 
-        public void HandleInput(float delta)
+        public void HandleRotationInput(float delta)
         {
-            Vector3 targetDir = Vector3.zero;
-            float moveOverride = inputHandler.moveAmount;
-            targetDir = cameraTransform.forward * inputHandler.vertical;
-            targetDir += cameraTransform.right * inputHandler.horizontal;
-            targetDir.y = 0;
-            targetDir.Normalize();
-
-            if(targetDir == Vector3.zero)
+            if(inputHandler.lockOnFlag)
             {
-                targetDir = myTransform.forward;
+                if(inputHandler.sprintFlag || inputHandler.rollFlag)
+                {
+                    Vector3 targetDir = Vector3.zero;
+                    targetDir = cameraHandler.cameraTransform.forward * inputHandler.vertical;
+                    targetDir += cameraHandler.cameraTransform.right * inputHandler.horizontal;
+                    targetDir.y = 0;
+                    targetDir.Normalize();
+
+                    if (targetDir == Vector3.zero)
+                    {
+                        targetDir = myTransform.forward;
+                    }
+                    Quaternion tr = Quaternion.LookRotation(targetDir);
+                    Quaternion rotation = Quaternion.Slerp(transform.rotation, tr, rotationSpeed * delta);
+                    transform.rotation = rotation;
+                }
+                else
+                {
+                    Vector3 rotationDir = moveDirection;
+                    rotationDir = cameraHandler.currentLockOnTarget.position - transform.position;
+                    rotationDir.y = 0;
+                    rotationDir.Normalize();
+                    Quaternion tr = Quaternion.LookRotation(rotationDir);
+                    Quaternion targetRotation = Quaternion.Slerp(transform.rotation, tr, rotationSpeed * delta);
+                    transform.rotation = targetRotation;
+                }
             }
-            float rs = rotationSpeed;
-            Quaternion tr = Quaternion.LookRotation(targetDir);
-            Quaternion rotation = Quaternion.Slerp(transform.rotation, tr, rs * delta);
-            transform.rotation = rotation;
+            else
+            {
+                Vector3 targetDir = Vector3.zero;
+                float moveOverride = inputHandler.moveAmount;
+                targetDir = cameraTransform.forward * inputHandler.vertical;
+                targetDir += cameraTransform.right * inputHandler.horizontal;
+                targetDir.y = 0;
+                targetDir.Normalize();
+
+                if (targetDir == Vector3.zero)
+                {
+                    targetDir = myTransform.forward;
+                }
+                float rs = rotationSpeed;
+                Quaternion tr = Quaternion.LookRotation(targetDir);
+                Quaternion rotation = Quaternion.Slerp(transform.rotation, tr, rs * delta);
+                transform.rotation = rotation;
+            }
+            
         }
 
-        public void HandleMovement(float delta)
+        public void HandleMovementInput(float delta)
         {
 
             if (inputHandler.rollFlag) return;
@@ -106,11 +141,20 @@ namespace MumbaiChawls.Player
 
             Vector3 projectVelocity = Vector3.ProjectOnPlane(moveDirection, normalVector);            
             rigidbody.velocity = projectVelocity;
-            animHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0, playerManager.isSprinting);
+
+            if (inputHandler.lockOnFlag && !inputHandler.sprintFlag)
+            {
+                animHandler.UpdateAnimatorValues(inputHandler.vertical, inputHandler.horizontal, playerManager.isSprinting);
+            }
+            else
+            {
+                animHandler.UpdateAnimatorValues(inputHandler.moveAmount, 0, playerManager.isSprinting);
+            }
+            
 
             if (animHandler.canRotate)
             {
-                HandleInput(delta);
+                HandleRotationInput(delta);
             }
         }
 

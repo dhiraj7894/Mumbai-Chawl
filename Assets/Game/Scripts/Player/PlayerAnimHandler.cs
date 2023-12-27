@@ -1,15 +1,15 @@
+using MumbaiChawls.Core;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace MumbaiChawls.Player
 {
-    public class AnimHandler : MonoBehaviour
+    public class PlayerAnimHandler : CharacterAnimManager
     {
         PlayerManager playerManager;
         InputHandler inputHandler;
-        PlayerLoco playerLoco;
-        public Animator anim;
+        PlayerLoco playerLoco;        
 
         int horizontal;
         int vertical;
@@ -82,12 +82,6 @@ namespace MumbaiChawls.Player
             anim.SetFloat(AnimHash.HORIZONTAL, h, 0.1f, Time.deltaTime);
         }
 
-        public void PlayTargetAnimation(string targetAnim, bool isInteracting)
-        {
-            anim.applyRootMotion = isInteracting;
-            anim.SetBool(AnimHash.INTERACTING, isInteracting);
-            anim.CrossFade(targetAnim, 0.2f);
-        }
         public void CanRotate()
         {
             canRotate = true;

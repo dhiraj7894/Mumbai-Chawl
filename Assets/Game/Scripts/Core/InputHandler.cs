@@ -67,7 +67,7 @@ namespace MumbaiChawls
 
         public void TickInput(float delta)
         {
-            Move(delta);
+            HandleMoveInout(delta);
             HandleRollingInput(delta);
             HandleAttackInput(delta);
             HandleLockOnInput();
@@ -92,7 +92,7 @@ namespace MumbaiChawls
                 rollInputTimer = 0;
             }
         }
-        private void Move(float delta)
+        private void HandleMoveInout(float delta)
         {
             horizontal = movementInput.x; 
             vertical = movementInput.y;
@@ -102,7 +102,6 @@ namespace MumbaiChawls
             mouseX = cameraInput.x; 
             mouseY = cameraInput.y;
         }
-
         private void HandleAttackInput(float delta)
         {
             inputActions.PlayerAction.RB.performed += i => rb_Input = true;
@@ -132,7 +131,6 @@ namespace MumbaiChawls
                 attacker.HandleHeavyAttack(inventory.rightCombatItem);
             }
         }
-
         private void HandleLockOnInput()
         {
             if(lockOnInput && !lockOnFlag)
@@ -152,7 +150,8 @@ namespace MumbaiChawls
                 lockOnFlag = false;
                 lockOnInput = false;   
                 cameraHandler.ClearLockOnTargets();
-            }            
+            }
+            cameraHandler.SetCameraHeight();
         }
     }
 }

@@ -8,7 +8,7 @@ namespace MumbaiChawls.Player
 
     public class PlayerAttacker : MonoBehaviour
     {
-        AnimHandler animHandler;
+        PlayerAnimHandler animHandler;
         InputHandler inputHandler;
 
 
@@ -16,7 +16,7 @@ namespace MumbaiChawls.Player
 
         private void Awake()
         {
-            animHandler = GetComponent<AnimHandler>();
+            animHandler = GetComponent<PlayerAnimHandler>();
             inputHandler = GetComponent<InputHandler>();
         }
 

@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 4fba695b7795aef468377169616897ea
+guid: 08b32b6c56170c74c844670f9f8d61e3
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -31,11 +31,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Right Starfe
+      name: Running Backwards
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 20
+      lastFrame: 34
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

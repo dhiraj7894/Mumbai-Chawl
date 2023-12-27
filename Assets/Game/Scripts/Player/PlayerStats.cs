@@ -3,22 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using MumbaiChawls;
 using MumbaiChawls.Control.UI;
+using MumbaiChawls.Core;
 
 namespace MumbaiChawls.Player.Stats
 {
-    public class PlayerStats : MonoBehaviour
+    public class PlayerStats : CharacterStatsManager
     {
         public HealthBar healthBar;
-        public int healthLevel = 10;
-        public int maxHealth;
-        public int currentHealth;
-
-
-        private AnimHandler animHandler;
+        private PlayerAnimHandler animHandler;
 
         private void Awake()
         {
-            animHandler = GetComponent<AnimHandler>();
+            animHandler = GetComponent<PlayerAnimHandler>();
         }
 
         private void Start()

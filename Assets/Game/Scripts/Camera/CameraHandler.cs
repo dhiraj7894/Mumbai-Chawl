@@ -1,4 +1,4 @@
-using MumbaiChawls.core;
+using MumbaiChawls.Core;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -10,10 +10,12 @@ namespace MumbaiChawls
     {
         private Transform myTransform;
         private InputHandler myInputHandler;
+        private PlayerManager playerManager;
 
         private Vector3 camFollowVelocity = Vector3.zero;
         private Vector3 cameraTransformPosition;
         private LayerMask ignoreLayer;
+        private LayerMask enviromentLayer;
 
         public Transform targetTransform;
         public Transform cameraTransform;
@@ -33,15 +35,20 @@ namespace MumbaiChawls
         public float cameraSphereRadius = 0.2f;
         public float cameraCollisionOffset = 0.2f;
         public float minimumCollisionOffset = 0.2f;
+        public float lockPivotPosition = 2.25f;
+        public float unlockedPivotPosition = 2.25f;
+        [Space(5), Header("Lock Character Data")]
 
-        [Header("Lock Character Data")]
-        List<CharacterManager> availableTargets = new List<CharacterManager>();
         
         public Transform nearestLockOnTarget;
         public Transform currentLockOnTarget;
+        public Transform leftLockTarget;
+        public Transform rightLockTarget;
         
         public float lockOnArea = 25;
-        public float maximumLockOnDistance = 30;
+        public float maximumLockOnDistance = 30;        
+        
+        List<CharacterManager> availableTargets = new List<CharacterManager>();
 
 
         [System.Obsolete]
@@ -52,8 +59,12 @@ namespace MumbaiChawls
             ignoreLayer = ~(1 << 8 | 1 << 9 | 1 << 10);
             targetTransform = FindObjectOfType<PlayerManager>().transform;
             myInputHandler = FindObjectOfType<InputHandler>();
+            playerManager = FindObjectOfType<PlayerManager>();
         }
-
+        private void Start()
+        {
+            enviromentLayer = LayerMask.NameToLayer("Environment");
+        }
         public void followTarget(float delta)
         {
             Vector3 targetPosition = Vector3.SmoothDamp(myTransform.position, targetTransform.position,ref camFollowVelocity, delta / followSpeed);
@@ -126,19 +137,34 @@ namespace MumbaiChawls
         public void HandleLockOn()
         {
             float shortDistance = Mathf.Infinity;
+           // float shortestDistanceOfLeftTarget = Mathf.Infinity;
+           // float shortestDistanceOfRightTarget = Mathf.Infinity;
 
             Collider[] collider = Physics.OverlapSphere(targetTransform.position, lockOnArea);
             for (int i = 0; i < collider.Length; i++) { 
             CharacterManager character = collider[i].GetComponent<CharacterManager>();
                 if (character != null)
                 {
+                    RaycastHit hit;
                     Vector3 lockTargetDirection = character.transform.position - targetTransform.position;
                     float distanceFromTarget = Vector3.Distance(targetTransform.position, character.transform.position);
                     float viewableAngle = Vector3.Angle(lockTargetDirection, cameraTransform.forward);
 
                     if (character.transform.root != targetTransform.root && viewableAngle > -50 && viewableAngle < 50&& distanceFromTarget<=maximumLockOnDistance)
                     {
-                        availableTargets.Add(character);
+                        if(Physics.Linecast(playerManager.lockOnTransform.position, character.lockOnTransform.position, out hit))
+                        {
+                            Debug.DrawLine(playerManager.lockOnTransform.position, character.lockOnTransform.position);
+                            if(hit.transform.gameObject.layer == enviromentLayer)
+                            {
+                                Debug.Log("This is not Layer");
+                            }
+                            else
+                            {
+                                availableTargets.Add(character);
+                            }
+                        }
+                        
                     }
                 }
             }
@@ -150,6 +176,24 @@ namespace MumbaiChawls
                     shortDistance = distanceFromTarget;
                     nearestLockOnTarget = availableTargets[i].lockOnTransform;
                 }
+                //Tutorial Number = 25(P2)
+               /* if (myInputHandler.lockOnFlag)
+                {
+                    Vector3 relativeEnemyPosition = currentLockOnTarget.InverseTransformPoint(availableTargets[i].transform.position);
+                    var distanceFromLeftTarget = currentLockOnTarget.transform.position.x - availableTargets[i].transform.position.x;
+                    var distanceFromRightTarget = currentLockOnTarget.transform.position.x + availableTargets[i].transform.position.x;
+
+                    if(relativeEnemyPosition.x > 0 && distanceFromLeftTarget< shortestDistanceOfLeftTarget)
+                    {
+                        shortestDistanceOfLeftTarget = distanceFromLeftTarget;
+                        leftLockTarget = availableTargets[i].lockOnTransform;
+                    }
+                    if (relativeEnemyPosition.x < 0 && distanceFromRightTarget < shortestDistanceOfRightTarget)
+                    {
+                        shortestDistanceOfRightTarget = distanceFromRightTarget;
+                        rightLockTarget = availableTargets[i].lockOnTransform;
+                    }
+                }*/
             }
         }
 
@@ -158,6 +202,22 @@ namespace MumbaiChawls
             availableTargets.Clear();
             nearestLockOnTarget = null;
             currentLockOnTarget = null;
+        }
+
+        public void SetCameraHeight()
+        {
+            Vector3 velocity = Vector3.zero;
+            Vector3 newLockedPosition = new Vector3(0, lockPivotPosition);
+            Vector3 newUnlockedPosition = new Vector3(0, unlockedPivotPosition);
+
+            if (currentLockOnTarget != null)
+            {
+                cameraPivotTransform.transform.localPosition = Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newLockedPosition, ref velocity, Time.deltaTime);
+            }
+            else
+            {
+                cameraPivotTransform.transform.localPosition = Vector3.SmoothDamp(cameraPivotTransform.transform.localPosition, newUnlockedPosition, ref velocity, Time.deltaTime);
+            }
         }
     }
 }

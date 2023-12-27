@@ -2,17 +2,13 @@ using MumbaiChawls.Control.UI;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using MumbaiChawls.Core;
 
 namespace MumbaiChawls.Enemy.Stats
 {
 
-    public class EnemyStats : MonoBehaviour
+    public class EnemyStats : CharacterStatsManager
     {
-        public int healthLevel = 10;
-        public int maxHealth;
-        public int currentHealth;
-
-
         private Animator anim;
         private void Awake()
         {
