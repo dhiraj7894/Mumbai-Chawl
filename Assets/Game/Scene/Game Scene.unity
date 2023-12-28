@@ -3971,8 +3971,8 @@ MonoBehaviour:
   cameraSphereRadius: 0.2
   cameraCollisionOffset: 0.2
   minimumCollisionOffset: 0.2
-  lockPivotPosition: 2.22
-  unlockedPivotPosition: 2.25
+  lockPivotPosition: 1.5
+  unlockedPivotPosition: 1.5
   nearestLockOnTarget: {fileID: 0}
   currentLockOnTarget: {fileID: 0}
   leftLockTarget: {fileID: 0}
@@ -4472,10 +4472,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockOnTransform: {fileID: 1982550205}
+  agent: {fileID: 0}
+  enemyRB: {fileID: 0}
+  currentState: {fileID: 0}
   isPerformingAction: 0
-  attackActions: []
-  currentAttack: {fileID: 0}
+  currentTarget: {fileID: 0}
+  distanceFromTarget: 0
+  rotationSpeed: 15
+  maximumAttackRange: 1.25
   detectionRadius: 3
+  viableAngle: 50
   detectionAngle: 50
   currentRecoveryTime: 0
 --- !u!54 &1332309320
@@ -5045,10 +5051,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lockOnTransform: {fileID: 1304613184}
+  agent: {fileID: 0}
+  enemyRB: {fileID: 0}
+  currentState: {fileID: 0}
   isPerformingAction: 0
-  attackActions: []
-  currentAttack: {fileID: 0}
+  currentTarget: {fileID: 0}
+  distanceFromTarget: 0
+  rotationSpeed: 15
+  maximumAttackRange: 1.25
   detectionRadius: 3
+  viableAngle: 50
   detectionAngle: 50
   currentRecoveryTime: 0
 --- !u!54 &1497755471
@@ -13113,6 +13125,12 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!95 &1863231760 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 8030130247949591332, guid: d6bbb5110de35f54dbf2517dd8fa3148,
+    type: 3}
+  m_PrefabInstance: {fileID: 1823398079374141264}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1873777879
 GameObject:
   m_ObjectHideFlags: 0
@@ -13917,10 +13935,20 @@ PrefabInstance:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 696315291}
+    - target: {fileID: 432278713247803582, guid: ee1b8824ef3e18e43bb2d1d11f6184c8,
+        type: 3}
+      propertyPath: healthLevel
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6415230490781072389, guid: ee1b8824ef3e18e43bb2d1d11f6184c8,
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 7786172519315086147, guid: ee1b8824ef3e18e43bb2d1d11f6184c8,
+        type: 3}
+      propertyPath: m_Radius
+      value: 0.29
       objectReference: {fileID: 0}
     - target: {fileID: 8368971397923884464, guid: ee1b8824ef3e18e43bb2d1d11f6184c8,
         type: 3}
@@ -14047,33 +14075,36 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3843637984445196942, guid: d6bbb5110de35f54dbf2517dd8fa3148,
         type: 3}
-      propertyPath: currentAttack
-      value: 
-      objectReference: {fileID: 11400000, guid: 03652d38058ed34439fe579d9104ecde,
-        type: 2}
-    - target: {fileID: 3843637984445196942, guid: d6bbb5110de35f54dbf2517dd8fa3148,
-        type: 3}
-      propertyPath: attackActions.Array.size
-      value: 2
+      propertyPath: viableAngle
+      value: 35
       objectReference: {fileID: 0}
     - target: {fileID: 3843637984445196942, guid: d6bbb5110de35f54dbf2517dd8fa3148,
         type: 3}
-      propertyPath: 'attackActions.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 607e55c459844834fa487ce8af79f8f1,
-        type: 2}
-    - target: {fileID: 3843637984445196942, guid: d6bbb5110de35f54dbf2517dd8fa3148,
+      propertyPath: detectionAngle
+      value: 35
+      objectReference: {fileID: 0}
+    - target: {fileID: 4103235112461993930, guid: d6bbb5110de35f54dbf2517dd8fa3148,
         type: 3}
-      propertyPath: 'attackActions.Array.data[1]'
+      propertyPath: anim
       value: 
-      objectReference: {fileID: 11400000, guid: 03652d38058ed34439fe579d9104ecde,
-        type: 2}
+      objectReference: {fileID: 1863231760}
     - target: {fileID: 7568811146821135179, guid: d6bbb5110de35f54dbf2517dd8fa3148,
         type: 3}
       propertyPath: m_Name
       value: Basic Enemy
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 8030130247949591332, guid: d6bbb5110de35f54dbf2517dd8fa3148,
+        type: 3}
+      propertyPath: m_AnimatePhysics
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8189178215887696573, guid: d6bbb5110de35f54dbf2517dd8fa3148,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 584857957048531411, guid: d6bbb5110de35f54dbf2517dd8fa3148, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

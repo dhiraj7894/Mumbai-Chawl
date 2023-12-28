@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Attack 1
   m_EditorClassIdentifier: 
   actionAnimation: Lead Jab_01
-  attackScore: 3
-  recoveryTime: 2
+  attackScore: 1
+  recoveryTime: 1
   attackAngle: 35
   minimumDistanceNeededToAttack: 0
   maximumDistanceNeededToAttack: 3

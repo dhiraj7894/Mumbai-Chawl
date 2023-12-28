@@ -9,21 +9,21 @@ namespace MumbaiChawls.Enemy
 
     public class EnemyAnimManager : CharacterAnimManager
     {
-        EnemyLocoManager enemyLoco;
+        EnemyManager enemyManager;
         private void Start()
         {
             anim = GetComponent<Animator>();
-            enemyLoco = GetComponent<EnemyLocoManager>();
+            enemyManager = GetComponent<EnemyManager>();
         }
 
         private void OnAnimatorMove()
         {
             float delta = Time.deltaTime;
-            enemyLoco.enemyRB.drag = 0;
+            enemyManager.enemyRB.drag = 0;
             Vector3 deltaPosition = anim.deltaPosition;
             deltaPosition.y = 0;
             Vector3 velocity = deltaPosition / delta;
-            enemyLoco.enemyRB.velocity = velocity;
+            enemyManager.enemyRB.velocity = velocity;
         }
     }
 }
