@@ -14,7 +14,7 @@ namespace MumbaiChawls
 
         private Vector3 camFollowVelocity = Vector3.zero;
         private Vector3 cameraTransformPosition;
-        private LayerMask ignoreLayer;
+        public LayerMask ignoreLayer;
         private LayerMask enviromentLayer;
 
         public Transform targetTransform;

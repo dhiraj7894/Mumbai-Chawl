@@ -2,6 +2,7 @@ using MumbaiChawls.Player;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngineInternal;
 
 namespace MumbaiChawls
@@ -19,6 +20,13 @@ namespace MumbaiChawls
         public bool b_Input;
         public bool rb_Input;
         public bool rt_Input;
+        public bool f_Input;
+
+        public bool d_up;
+        public bool d_right;
+        public bool d_down;
+        public bool d_left;
+
         public bool lockOnInput;
         
         public bool rollFlag;
@@ -71,6 +79,8 @@ namespace MumbaiChawls
             HandleRollingInput(delta);
             HandleAttackInput(delta);
             HandleLockOnInput();
+            HandleQuickSloteInput();
+            HandleInteractableInput();
         }
 
         public void HandleRollingInput(float delta)
@@ -113,7 +123,7 @@ namespace MumbaiChawls
                 {
                     if (comboFlag) return;
                     comboFlag = true;
-                    attacker.HandleWeaponCombo(inventory.rightCombatItem);
+                    attacker.HandleWeaponCombo(inventory.rightWeapon);
                     comboFlag = false;
                 }
                 else
@@ -123,12 +133,12 @@ namespace MumbaiChawls
 
                     if (playerManager.canDoCombo)
                         return;
-                    attacker.HandleLightAttack(inventory.rightCombatItem);
+                    attacker.HandleLightAttack(inventory.rightWeapon);
                 }
                 
             }else if (rt_Input)
             {
-                attacker.HandleHeavyAttack(inventory.rightCombatItem);
+                attacker.HandleHeavyAttack(inventory.rightWeapon);
             }
         }
         private void HandleLockOnInput()
@@ -152,6 +162,26 @@ namespace MumbaiChawls
                 cameraHandler.ClearLockOnTargets();
             }
             cameraHandler.SetCameraHeight();
+        }
+
+        public void HandleQuickSloteInput()
+        {
+            inputActions.UICon.DRight.performed += i => d_right = true;
+            inputActions.UICon.DUp.performed += i => d_up = true;
+
+            if (d_up)
+            {
+                inventory.ChangeLeftWeapon();
+            }
+            else if (d_right)
+            {
+                inventory.ChangeRightWeapon();
+            }
+        }
+
+        public void HandleInteractableInput()
+        {
+            inputActions.PlayerAction.Interact.performed += i => f_Input = true;
         }
     }
 }

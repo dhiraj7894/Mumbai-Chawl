@@ -14,8 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemName: Boxing
   itemIcon: {fileID: 0}
-  prefab: {fileID: 2451481342896509280, guid: b04dcf2f75af28b4eacc2f3c1a719f8c, type: 3}
+  prefab: {fileID: 2451481342896509280, guid: a27ada4bf9bfdd34ebeb912c3c0cc1b4, type: 3}
   isUnarmed: 0
+  AnimController: {fileID: 9100000, guid: ccdd846540e69894eb953205bf24a8ab, type: 2}
   Lead_Jab_01: Lead Jab_01
   Lead_Jab_02: Lead Jab_02
   Hook_01: Hook_01

@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b9d6589c4cbcfe24ab8e4dceccef6f38, type: 3}
+  m_Name: Gun
+  m_EditorClassIdentifier: 
+  itemName: Pistol
+  itemIcon: {fileID: 0}
+  prefab: {fileID: 3945439267341489056, guid: d203906c532c7414bb2292dc2ec075b5, type: 3}
+  isUnarmed: 0
+  AnimController: {fileID: 9100000, guid: dbcafadcee8a8344c845e4bd4bce42b9, type: 2}
+  Lead_Jab_01: ch_01_shoot
+  Lead_Jab_02: ch_01_shoot
+  Hook_01: ch_01_shoot

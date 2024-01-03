@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 namespace MumbaiChawls.Control
 {
@@ -10,7 +11,7 @@ namespace MumbaiChawls.Control
         public bool isUnarmed;
 
         [Header("Animations Name")]
-
+        public AnimatorController AnimController;
         public string Lead_Jab_01;
         public string Lead_Jab_02;
         public string Hook_01;

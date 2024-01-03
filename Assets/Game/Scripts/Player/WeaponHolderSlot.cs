@@ -1,17 +1,22 @@
 using UnityEngine;
 using MumbaiChawls.Control;
+using MumbaiChawls.Enemy;
 
 namespace MumbaiChawls.Player
 {
     
     public class WeaponHolderSlot : MonoBehaviour
     {
-        public Transform parantOverride;
-
+        public Transform parantOverride;        
         public bool isRightHandSlot;
         public bool isLeftHandSlot;
 
         public GameObject currentWeaponModel;
+
+        private void Start()
+        {
+           
+        }
 
         public void EquipWeapon()
         {
@@ -19,7 +24,7 @@ namespace MumbaiChawls.Player
         }
         public void UnequipWeapon()
         {
-            if (!currentWeaponModel)
+            if (currentWeaponModel)
             {
                 currentWeaponModel.gameObject.SetActive(false);
                 
@@ -27,7 +32,7 @@ namespace MumbaiChawls.Player
         }
         public void UnequipWeaponAndDestroy()
         {
-            if (!currentWeaponModel)
+            if (currentWeaponModel)
             {
                 Destroy(currentWeaponModel.gameObject);
             }
@@ -42,8 +47,8 @@ namespace MumbaiChawls.Player
             }
 
             GameObject model = Instantiate(combatItem.prefab.gameObject) as GameObject;
-
-            if(model != null)
+            
+            if (model != null)
             {
                 if(parantOverride != null)
                 {

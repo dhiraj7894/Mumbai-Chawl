@@ -176,6 +176,15 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""29983f72-0565-4eef-80e7-a937917db62c"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -266,6 +275,105 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
                     ""action"": ""LockOn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""8759258f-7863-489f-8a17-d8abbf212f9c"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
+        },
+        {
+            ""name"": ""UICon"",
+            ""id"": ""c85be652-4389-4917-b55e-59ca926c528f"",
+            ""actions"": [
+                {
+                    ""name"": ""D-Up"",
+                    ""type"": ""Button"",
+                    ""id"": ""2b2e4b4c-c902-44d2-9568-24e8a7c45cf9"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""D-Right"",
+                    ""type"": ""Button"",
+                    ""id"": ""07489620-f460-485e-9263-9f683d2c6134"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""D-Down"",
+                    ""type"": ""Button"",
+                    ""id"": ""70aae1d9-edfc-4c05-b399-46fd88d39985"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""D-Left"",
+                    ""type"": ""Button"",
+                    ""id"": ""25f7a43b-967e-4734-962f-227d3e65ea04"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""0d6f8c7c-5d69-4839-8fb3-62d6d38f7653"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""D-Up"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""086d22ca-ec8d-460b-a065-da4d279c541e"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""D-Down"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f518b4a8-7510-4910-8a0f-cb16296f5163"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""D-Left"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""07d0a79b-c59c-4a73-816c-0af1108a4b33"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""D-Right"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -288,6 +396,13 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         m_PlayerAction_RB = m_PlayerAction.FindAction("RB", throwIfNotFound: true);
         m_PlayerAction_RT = m_PlayerAction.FindAction("RT", throwIfNotFound: true);
         m_PlayerAction_LockOn = m_PlayerAction.FindAction("LockOn", throwIfNotFound: true);
+        m_PlayerAction_Interact = m_PlayerAction.FindAction("Interact", throwIfNotFound: true);
+        // UICon
+        m_UICon = asset.FindActionMap("UICon", throwIfNotFound: true);
+        m_UICon_DUp = m_UICon.FindAction("D-Up", throwIfNotFound: true);
+        m_UICon_DRight = m_UICon.FindAction("D-Right", throwIfNotFound: true);
+        m_UICon_DDown = m_UICon.FindAction("D-Down", throwIfNotFound: true);
+        m_UICon_DLeft = m_UICon.FindAction("D-Left", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -407,6 +522,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerAction_RB;
     private readonly InputAction m_PlayerAction_RT;
     private readonly InputAction m_PlayerAction_LockOn;
+    private readonly InputAction m_PlayerAction_Interact;
     public struct PlayerActionActions
     {
         private @PlayerInputs m_Wrapper;
@@ -415,6 +531,7 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         public InputAction @RB => m_Wrapper.m_PlayerAction_RB;
         public InputAction @RT => m_Wrapper.m_PlayerAction_RT;
         public InputAction @LockOn => m_Wrapper.m_PlayerAction_LockOn;
+        public InputAction @Interact => m_Wrapper.m_PlayerAction_Interact;
         public InputActionMap Get() { return m_Wrapper.m_PlayerAction; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -436,6 +553,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @LockOn.started += instance.OnLockOn;
             @LockOn.performed += instance.OnLockOn;
             @LockOn.canceled += instance.OnLockOn;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IPlayerActionActions instance)
@@ -452,6 +572,9 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
             @LockOn.started -= instance.OnLockOn;
             @LockOn.performed -= instance.OnLockOn;
             @LockOn.canceled -= instance.OnLockOn;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IPlayerActionActions instance)
@@ -469,6 +592,76 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         }
     }
     public PlayerActionActions @PlayerAction => new PlayerActionActions(this);
+
+    // UICon
+    private readonly InputActionMap m_UICon;
+    private List<IUIConActions> m_UIConActionsCallbackInterfaces = new List<IUIConActions>();
+    private readonly InputAction m_UICon_DUp;
+    private readonly InputAction m_UICon_DRight;
+    private readonly InputAction m_UICon_DDown;
+    private readonly InputAction m_UICon_DLeft;
+    public struct UIConActions
+    {
+        private @PlayerInputs m_Wrapper;
+        public UIConActions(@PlayerInputs wrapper) { m_Wrapper = wrapper; }
+        public InputAction @DUp => m_Wrapper.m_UICon_DUp;
+        public InputAction @DRight => m_Wrapper.m_UICon_DRight;
+        public InputAction @DDown => m_Wrapper.m_UICon_DDown;
+        public InputAction @DLeft => m_Wrapper.m_UICon_DLeft;
+        public InputActionMap Get() { return m_Wrapper.m_UICon; }
+        public void Enable() { Get().Enable(); }
+        public void Disable() { Get().Disable(); }
+        public bool enabled => Get().enabled;
+        public static implicit operator InputActionMap(UIConActions set) { return set.Get(); }
+        public void AddCallbacks(IUIConActions instance)
+        {
+            if (instance == null || m_Wrapper.m_UIConActionsCallbackInterfaces.Contains(instance)) return;
+            m_Wrapper.m_UIConActionsCallbackInterfaces.Add(instance);
+            @DUp.started += instance.OnDUp;
+            @DUp.performed += instance.OnDUp;
+            @DUp.canceled += instance.OnDUp;
+            @DRight.started += instance.OnDRight;
+            @DRight.performed += instance.OnDRight;
+            @DRight.canceled += instance.OnDRight;
+            @DDown.started += instance.OnDDown;
+            @DDown.performed += instance.OnDDown;
+            @DDown.canceled += instance.OnDDown;
+            @DLeft.started += instance.OnDLeft;
+            @DLeft.performed += instance.OnDLeft;
+            @DLeft.canceled += instance.OnDLeft;
+        }
+
+        private void UnregisterCallbacks(IUIConActions instance)
+        {
+            @DUp.started -= instance.OnDUp;
+            @DUp.performed -= instance.OnDUp;
+            @DUp.canceled -= instance.OnDUp;
+            @DRight.started -= instance.OnDRight;
+            @DRight.performed -= instance.OnDRight;
+            @DRight.canceled -= instance.OnDRight;
+            @DDown.started -= instance.OnDDown;
+            @DDown.performed -= instance.OnDDown;
+            @DDown.canceled -= instance.OnDDown;
+            @DLeft.started -= instance.OnDLeft;
+            @DLeft.performed -= instance.OnDLeft;
+            @DLeft.canceled -= instance.OnDLeft;
+        }
+
+        public void RemoveCallbacks(IUIConActions instance)
+        {
+            if (m_Wrapper.m_UIConActionsCallbackInterfaces.Remove(instance))
+                UnregisterCallbacks(instance);
+        }
+
+        public void SetCallbacks(IUIConActions instance)
+        {
+            foreach (var item in m_Wrapper.m_UIConActionsCallbackInterfaces)
+                UnregisterCallbacks(item);
+            m_Wrapper.m_UIConActionsCallbackInterfaces.Clear();
+            AddCallbacks(instance);
+        }
+    }
+    public UIConActions @UICon => new UIConActions(this);
     private int m_PlayerSchemeIndex = -1;
     public InputControlScheme PlayerScheme
     {
@@ -489,5 +682,13 @@ public partial class @PlayerInputs: IInputActionCollection2, IDisposable
         void OnRB(InputAction.CallbackContext context);
         void OnRT(InputAction.CallbackContext context);
         void OnLockOn(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
+    }
+    public interface IUIConActions
+    {
+        void OnDUp(InputAction.CallbackContext context);
+        void OnDRight(InputAction.CallbackContext context);
+        void OnDDown(InputAction.CallbackContext context);
+        void OnDLeft(InputAction.CallbackContext context);
     }
 }

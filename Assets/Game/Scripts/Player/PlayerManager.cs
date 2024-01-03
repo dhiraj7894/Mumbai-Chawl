@@ -12,11 +12,12 @@ namespace MumbaiChawls
         InputHandler inputHandler;
         PlayerLoco playerLoco;
         CameraHandler cameraHandler;
-        
-        Animator anim;
+        PlayerAnimHandler playerAnimHandler;
+        //Animator anim;
 
 
         public bool isInteracting;
+
 
         [Header("Player Flags")]
         public bool isSprinting;
@@ -35,7 +36,7 @@ namespace MumbaiChawls
         {
             inputHandler = GetComponent<InputHandler>();
             playerLoco = GetComponent<PlayerLoco>();
-            anim = GetComponent<Animator>();            
+            playerAnimHandler = GetComponent<PlayerAnimHandler>();          
         }
         private void FixedUpdate()
         {
@@ -51,13 +52,15 @@ namespace MumbaiChawls
         {
             float delta = Time.deltaTime; 
 
-            isInteracting = anim.GetBool(AnimHash.INTERACTING);
-            canDoCombo = anim.GetBool(AnimHash.CANDOCOMBO);
+            isInteracting = playerAnimHandler.anim.GetBool(AnimHash.INTERACTING);
+            canDoCombo = playerAnimHandler.anim.GetBool(AnimHash.CANDOCOMBO);
             
             inputHandler.TickInput(delta);            
             playerLoco.HandleMovementInput(delta);
             playerLoco.HandleRollingAndSprinting(delta);
             playerLoco.HandleFalling(delta, playerLoco.moveDirection);
+
+            CheckForInteractableOnject();
 
         }
         private void LateUpdate()
@@ -68,10 +71,44 @@ namespace MumbaiChawls
             inputHandler.rb_Input = false;
             inputHandler.rt_Input = false;
 
+            inputHandler.d_up = false;
+            inputHandler.d_right = false;
+
+            inputHandler.f_Input = false;
+
             if(isInAir)
             {
                 playerLoco.inAirTime = playerLoco.inAirTime + Time.deltaTime;
             }
+        }
+
+        public void CheckForInteractableOnject()
+        {
+            RaycastHit hit;
+            if (Physics.SphereCast(transform.position, 0.6f, transform.forward, out hit, 1f, cameraHandler.ignoreLayer))
+            {
+                if(hit.collider.tag == TagHash.INTERACTABLE)
+                {
+                    Interactable interactableObject = hit.collider.GetComponent<Interactable>();
+
+                    if(interactableObject != null)
+                    {
+                        string interactableText = interactableObject.interactbleText;
+
+                        if (inputHandler.f_Input)
+                        {
+                            hit.collider.GetComponent<Interactable>().Interact(this);
+                        }
+                    }
+                }
+            }
+        }
+
+        public void InteractWithFirecracker(Transform t, string anim)
+        {
+            playerLoco.rigidbody.velocity = Vector3.zero;
+            //transform.position = t.position;
+            playerAnimHandler.PlayTargetAnimation(anim, true);
         }
     }
 }

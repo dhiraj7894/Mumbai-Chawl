@@ -20,6 +20,7 @@ GameObject:
   - component: {fileID: 8227045525773720481}
   - component: {fileID: 131573136615375106}
   - component: {fileID: 432278713247803582}
+  - component: {fileID: 4699243207635606216}
   m_Layer: 6
   m_Name: Player
   m_TagString: player
@@ -54,7 +55,7 @@ Animator:
   m_GameObject: {fileID: 6415230490781072389}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: b22473c79fbbdeb469a66c1f97d83bf4, type: 3}
-  m_Controller: {fileID: 9100000, guid: ccdd846540e69894eb953205bf24a8ab, type: 2}
+  m_Controller: {fileID: 0}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -112,7 +113,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.2
+  m_Radius: 0.29
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
@@ -161,6 +162,10 @@ MonoBehaviour:
   b_Input: 0
   rb_Input: 0
   rt_Input: 0
+  d_up: 0
+  d_right: 0
+  d_down: 0
+  d_left: 0
   lockOnInput: 0
   rollFlag: 0
   sprintFlag: 0
@@ -281,6 +286,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75dd8cd89a658b44c9825e5f10dbb75d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerAnimHandler: {fileID: 0}
 --- !u!114 &8227045525773720481
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -293,8 +299,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa27131c5bf3dca43b4d52614b67fc31, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  leftCombatItem: {fileID: 11400000, guid: f103dd2c0a16a3549a7ff8ee7a2c92aa, type: 2}
-  rightCombatItem: {fileID: 11400000, guid: f103dd2c0a16a3549a7ff8ee7a2c92aa, type: 2}
+  rightWeapon: {fileID: 0}
+  leftWeapon: {fileID: 0}
+  unarmedCombatItem: {fileID: 11400000, guid: f103dd2c0a16a3549a7ff8ee7a2c92aa, type: 2}
+  weaponInLeftCombatItem:
+  - {fileID: 11400000, guid: f103dd2c0a16a3549a7ff8ee7a2c92aa, type: 2}
+  weaponInRightCombatItem:
+  - {fileID: 11400000, guid: 0f078f77d2844cd41a510b6c61fae2fa, type: 2}
+  currentRightWeaponIndex: -1
+  currentLeftWeaponIndex: -1
+  combatInventory: []
 --- !u!114 &131573136615375106
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,6 +338,20 @@ MonoBehaviour:
   maxHealth: 0
   currentHealth: 0
   healthBar: {fileID: 0}
+--- !u!114 &4699243207635606216
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6415230490781072389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a76d5b6ec9d975d4984bb1e7f8cebe2d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  anim: {fileID: 0}
+  canRotate: 1
 --- !u!1 &8297132419417104379
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,8 +15,10 @@ namespace MumbaiChawls.Player
         DamageCollider leftHandDamageCollider;
         DamageCollider rightHandDamageCollider;
 
+        public Animator playerAnimHandler;
         private void Awake()
         {
+            playerAnimHandler = GetComponent<Animator>();
             WeaponHolderSlot[] weaponHolderSlots = GetComponentsInChildren<WeaponHolderSlot>();
 
             foreach (WeaponHolderSlot weaponHolderSlot in weaponHolderSlots)
@@ -34,6 +36,7 @@ namespace MumbaiChawls.Player
 
         public void LoadWeaponOnSlot(CombatItem combatItem, bool isLeft)
         {
+            playerAnimHandler.runtimeAnimatorController = combatItem.AnimController;
             if (isLeft)
             {
                 leftHandSlot.LoadWeaponModel(combatItem);

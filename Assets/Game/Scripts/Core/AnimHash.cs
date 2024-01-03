@@ -22,6 +22,8 @@ namespace MumbaiChawls
         public const string DYING = "Dying";
 
         public const string CANDOCOMBO = "canDoCombo";
+
+        public const string FIRECRACKER = "burn cracker";
         public AnimHash()
         {
             Animator.StringToHash(LOCOMOTION);
@@ -36,6 +38,16 @@ namespace MumbaiChawls
             Animator.StringToHash(DYING);
             Animator.StringToHash(EMPTY);
             Animator.StringToHash(CANDOCOMBO);
+            Animator.StringToHash(FIRECRACKER);
+        }
+    }
+
+    public class TagHash
+    {
+        public const string INTERACTABLE = "interactable";
+        public TagHash()
+        {
+            Animator.StringToHash(INTERACTABLE);
         }
     }
 }
