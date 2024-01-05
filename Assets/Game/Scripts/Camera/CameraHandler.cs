@@ -14,6 +14,9 @@ namespace MumbaiChawls
 
         private Vector3 camFollowVelocity = Vector3.zero;
         private Vector3 cameraTransformPosition;
+
+        public Animator cinem;
+        
         public LayerMask ignoreLayer;
         private LayerMask enviromentLayer;
 
@@ -70,7 +73,7 @@ namespace MumbaiChawls
             Vector3 targetPosition = Vector3.SmoothDamp(myTransform.position, targetTransform.position,ref camFollowVelocity, delta / followSpeed);
             myTransform.position = targetPosition;
 
-            HandleCameraCollision(delta);
+            //HandleCameraCollision(delta);
         }
 
         public void HandleCameraRotation(float delta, float mouseXInput, float mouseYInput)

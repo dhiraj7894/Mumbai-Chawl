@@ -43,8 +43,8 @@ namespace MumbaiChawls
             float delta = Time.fixedDeltaTime;
             if (cameraHandler)
             {
-                cameraHandler.followTarget(delta);
-                cameraHandler.HandleCameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
+                //cameraHandler.followTarget(delta);
+                //cameraHandler.HandleCameraRotation(delta, inputHandler.mouseX, inputHandler.mouseY);
             }
         }
 

@@ -24,6 +24,9 @@ namespace MumbaiChawls
         public const string CANDOCOMBO = "canDoCombo";
 
         public const string FIRECRACKER = "burn cracker";
+
+        public const string LOCKED = "Locked";
+        public const string UNLOCKED = "Unlocked";
         public AnimHash()
         {
             Animator.StringToHash(LOCOMOTION);
@@ -39,6 +42,8 @@ namespace MumbaiChawls
             Animator.StringToHash(EMPTY);
             Animator.StringToHash(CANDOCOMBO);
             Animator.StringToHash(FIRECRACKER);
+            Animator.StringToHash(LOCKED);
+            Animator.StringToHash(UNLOCKED);
         }
     }
 

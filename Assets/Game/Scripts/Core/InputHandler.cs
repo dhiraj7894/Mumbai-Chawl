@@ -151,6 +151,7 @@ namespace MumbaiChawls
                 if(cameraHandler.nearestLockOnTarget != null)
                 {
                     cameraHandler.currentLockOnTarget = cameraHandler.nearestLockOnTarget;
+                    cameraHandler.cinem.Play(AnimHash.LOCKED);
                     lockOnFlag = true;
                 }
 
@@ -158,7 +159,8 @@ namespace MumbaiChawls
             else if (lockOnInput && lockOnFlag)
             {
                 lockOnFlag = false;
-                lockOnInput = false;   
+                lockOnInput = false;
+                cameraHandler.cinem.Play(AnimHash.UNLOCKED);
                 cameraHandler.ClearLockOnTargets();
             }
             cameraHandler.SetCameraHeight();
